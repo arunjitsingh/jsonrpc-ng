@@ -1,0 +1,12 @@
+function UuidService() {
+  this.uuidFmt = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+}
+
+
+UuidService.prototype.next = function() {
+  /**! http://stackoverflow.com/a/2117523/377392 */
+  return this.uuidFmt.replace(/[xy]/g, function(c) {
+    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+    return v.toString(16);
+  });
+};
