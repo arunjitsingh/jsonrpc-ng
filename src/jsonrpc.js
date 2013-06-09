@@ -75,23 +75,6 @@ function JsonRpcProvider() {
 
 
     /**
-     * Shorthand to create a service method. Useful when defining services.
-     *
-     *
-     *
-     * @param {*} service
-     * @param {string} serviceName
-     * @param {string} methodName
-     */
-    jsonrpc.createMethod = function(serviceName, methodName) {
-      var method = serviceName + '.' + methodName;
-      return function(data) {
-        return jsonrpc.request(method, data);
-      };
-    };
-
-
-    /**
      * Helper to create services.
      *
      * Usage:
@@ -99,9 +82,7 @@ function JsonRpcProvider() {
      *       var service = jsonrpc.newService('locationsvc');
      *       this.get = service.createMethod('Get');
      *     });
-     *
      *     ...
-     *
      *     module.controller(..., function(locationService) {
      *       locationService.get({max: 10}).success(function(d) {...});
      *     });
