@@ -28,13 +28,13 @@ module.exports = function(grunt) {
     ngmin: {
       build: {
         src: 'build/jsonrpc.bundle.js',
-        dest: 'build/jsonrpc.annotated.js'
+        dest: 'build/jsonrpc.js'
       }
     },
 
     wrap: {
       build: {
-        src: 'build/jsonrpc.annotated.js',
+        src: 'build/jsonrpc.js',
         dest: '.',
         wrapper: ['"use strict";(function(){\n', '\n})();']
       }
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
         banner: banner
       },
       build: {
-        src: 'build/jsonrpc.annotated.js',
+        src: 'build/jsonrpc.js',
         dest: 'build/jsonrpc.min.js'
       }
     },
@@ -59,5 +59,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('default', ['concat', 'ngmin', 'wrap', 'uglify']);
+  grunt.registerTask('default', ['clean', 'concat', 'ngmin', 'wrap', 'uglify']);
 };
