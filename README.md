@@ -54,6 +54,7 @@ The base RPC path can be configured using the `jsonrpcProvider`
 
 1. Use $q and resolve the result to a value directly, like $resource.
 2. Make services more configurable through `jsonrpc.newService()`.
+3. Better tests.
 
 ### Licence
 

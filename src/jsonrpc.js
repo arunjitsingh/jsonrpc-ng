@@ -15,8 +15,8 @@ function JsonRpcProvider() {
      * Makes a JSON-RPC request to |method| with |data|.
      *
      * @param {{path:string=, method: string, data:*)}} options Call options.
-     * @param {angular.HttpConfig} config HTTP config.
-     * @return {angular.HttpPromise}
+     * @param {angular.$http.Config} config HTTP config.
+     * @return {angular.$http.HttpPromise}
      */
     function jsonrpc(options, config) {
       var id = uuid.next();
@@ -52,8 +52,8 @@ function JsonRpcProvider() {
      *
      * @param {string} method The method to call.
      * @param {?*} data The data for the call.
-     * @param {angular.HttpConfig} config HTTP config.
-     * @return {angular.HttpPromise}
+     * @param {angular.$http.Config} config HTTP config.
+     * @return {angular.$http.HttpPromise}
      */
     jsonrpc.request = function(method, data, config) {
       return jsonrpc({method: method, data: data}, config);
@@ -66,8 +66,8 @@ function JsonRpcProvider() {
      * @param {string} path The call path.
      * @param {string} method The method to call.
      * @param {?*} data The data for the call.
-     * @param {angular.HttpConfig} config HTTP config.
-     * @return {angular.HttpPromise}
+     * @param {angular.$http.Config} config HTTP config.
+     * @return {angular.$http.HttpPromise}
      */
     jsonrpc.requestPath = function(path, method, data, config) {
       return jsonrpc({path: path, method: method, data: data}, config);
@@ -85,9 +85,12 @@ function JsonRpcProvider() {
      *     ...
      *     module.controller(..., function(locationService) {
      *       locationService.get({max: 10}).success(function(d) {...});
+     *       // GET /rpc
+     *       // {"method": "locationsvc.Get", "params": {"max": 10}, ...}
      *     });
      *
-     * @param {string} name The name of the service.
+     * @param {string} name The name of the service. This is the prefix used for
+     *     all methods created through this service.
      * @constructor
      */
     function Service(name) {
@@ -100,7 +103,8 @@ function JsonRpcProvider() {
      *
      * @param {string} name Method name.
      * @param {angular.$http.Config=} opt_config HTTP config.
-     * @returns {Function}
+     * @return {function(*):angular.$http.HttpPromise} An implementation for the
+     *     service method.
      */
     Service.prototype.createMethod = function(name, opt_config) {
       var method = this.serviceName + '.' + name;
@@ -121,7 +125,7 @@ function JsonRpcProvider() {
 }
 
 
-/** Set the base path for JSON-RPC calls to |path|. */
+/** Set the base path for all JSON-RPC calls to |path|. */
 JsonRpcProvider.prototype.setBasePath = function(path) {
   this.defaults.rpcPath_ = path;
 };
